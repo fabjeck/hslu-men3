@@ -24,6 +24,7 @@ const connectMongo = async () => {
   if (db) {
     // Define MongoDB collections
     const collections = {
+      Posts: db.collection('posts'),
       Users: db.collection('users'),
     };
 

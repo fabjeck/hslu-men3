@@ -14,7 +14,7 @@ const connectMongo = async () => {
     const mongo = await client.connect();
     return mongo.db(process.env.MONGO_DB);
   } catch (err) {
-    return console.error(err);
+    return err;
   }
 };
 

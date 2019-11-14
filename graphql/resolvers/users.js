@@ -15,10 +15,10 @@ export default {
         });
         return { _id: user.insertedId, ...user.ops[0], password: null };
       } catch (err) {
-        return console.error(err);
+        return err;
       }
     } catch (err) {
-      return console.error(err);
+      return err;
     }
   },
 };

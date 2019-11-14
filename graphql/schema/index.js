@@ -37,4 +37,9 @@ export default buildSchema(`
       createPost(postInput: PostInput): Post
       createUser(userInput: UserInput): User
     }
+
+    schema {
+      query: Query
+      mutation: Mutation
+    }
 `);

@@ -5,6 +5,7 @@ import graphqlHTTP from 'express-graphql';
 
 import graphQLSchema from './graphql/schema/index';
 import graphQLResolvers from './graphql/resolvers/index';
+import isAuth from './middleware/is-auth';
 
 const connectMongo = async () => {
   const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@mycluster-ghzun.mongodb.net/test?retryWrites=true&w=majority`;
@@ -32,7 +33,7 @@ const connectMongo = async () => {
     const app = express();
 
     // Create GraphQL HTTP server
-    app.use('/graphql', bodyParser.json(), graphqlHTTP({
+    app.use('/graphql', bodyParser.json(), isAuth, graphqlHTTP({
       schema: graphQLSchema,
       rootValue: graphQLResolvers,
       context: { collections },

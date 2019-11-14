@@ -15,6 +15,12 @@ export default buildSchema(`
       email: String!
       password: String
       createdPosts: [Post!]
+    } 
+
+    type AuthData {
+      userId: ID!
+      token: String!
+      tokenExpiration: Int!
     }
 
     input PostInput {
@@ -31,6 +37,7 @@ export default buildSchema(`
 
     type Query {
       posts: [Post!]!
+      login(email: String!, password: String!): AuthData!
     }
 
     type Mutation {

@@ -39,17 +39,20 @@ export default {
       return err;
     }
   },
-  createPost: async (data, { collections: { Posts, Users } }) => {
+  createPost: async (data, { collections: { Posts, Users } }, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated');
+    }
     try {
       const post = await Posts.insertOne({
         title: data.postInput.title,
         description: data.postInput.description,
         text: data.postInput.text,
         date: data.postInput.date,
-        creator: new ObjectID('5dcc1525970d1219f66cf859'),
+        creator: new ObjectID(req.userId),
       });
       await Users.updateOne(
-        { _id: new ObjectID('5dcc1525970d1219f66cf859') },
+        { _id: new ObjectID(req.userId) },
         { $push: { createdPosts: new ObjectID(post.insertedId) } },
       ).catch((err) => err);
       return { _id: post.insertedId, ...post.ops[0] };

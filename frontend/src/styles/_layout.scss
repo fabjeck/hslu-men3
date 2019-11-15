@@ -1,0 +1,17 @@
+.auth-modal {
+  width: 400px;
+  .form-group {
+    margin-bottom: $space-large;
+    .form-element {
+      width: 100%;
+      border-radius: 5px;
+      padding: $space-base;
+    }
+    .form-link {
+      a {
+        color: $color-highlight;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+}

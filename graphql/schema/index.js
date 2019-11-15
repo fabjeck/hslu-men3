@@ -12,7 +12,7 @@ export default buildSchema(`
 
     type User {
       _id: ID! 
-      email: String!
+      username: String!
       password: String
       createdPosts: [Post!]
     } 
@@ -31,13 +31,13 @@ export default buildSchema(`
     }
 
     input UserInput {
-      email: String!
+      username: String!
       password: String!
     }
 
     type Query {
       posts: [Post!]!
-      login(email: String!, password: String!): AuthData!
+      login(username: String!, password: String!): AuthData!
     }
 
     type Mutation {

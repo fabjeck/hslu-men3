@@ -1,7 +1,7 @@
 import postsResolver from './posts';
-import usersResolver from './users';
+import authResolver from './auth';
 
 export default {
   ...postsResolver,
-  ...usersResolver,
+  ...authResolver,
 };

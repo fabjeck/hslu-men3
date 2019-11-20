@@ -2,7 +2,7 @@
   <div class="login">
    <section class="auth-modal">
      <form>
-        <FormInput label="Username" type="text" id="username"/>
+        <FormInput v-model="username" label="Username" type="text" id="username"/>
         <FormInput label="Password" type="password" id="password"/>
         <FormButton label="Login"/>
         <FormLink name="signup">

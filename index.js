@@ -32,15 +32,38 @@ const connectMongo = async () => {
     // Create Express application
     const app = express();
 
-    // Create GraphQL HTTP server
-    app.use('/graphql', bodyParser.json(), isAuth, graphqlHTTP({
-      schema: graphQLSchema,
-      rootValue: graphQLResolvers,
-      context: { collections },
-      graphiql: true,
-    }));
+    app.use(bodyParser.json());
 
-    // Define Express port
+    // Use middleware for headers
+    app.use((req, res, next) => {
+      // Define allowed request origins
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      // Define allowed request types
+      res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+      // Define allowed request headers
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      // Browser sends OPTIONS-requests to check if request its about to send is allowed by server
+      if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+      }
+      return next();
+    });
+
+    // Use middleware for authorization
+    app.use(isAuth);
+
+    // Create GraphQL HTTP server
+    app.use(
+      '/graphql',
+      graphqlHTTP({
+        schema: graphQLSchema,
+        rootValue: graphQLResolvers,
+        context: { collections },
+        graphiql: true,
+      }),
+    );
+
+    // Define Express (GraphQL server) port
     const PORT = 3000;
     app.listen(PORT);
   }

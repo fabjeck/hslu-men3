@@ -27,6 +27,37 @@ const populateUser = async (Users, Posts, userId) => {
 };
 
 export default {
+  createPost: async (data, { collections: { Posts, Users } }, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated');
+    }
+    const input = data.map((prop) => prop.postInput);
+    try {
+      const post = await Posts.insertOne({
+        title: input.title,
+        description: input.description,
+        text: input.text,
+        date: input.date,
+        creator: new ObjectID(req.userId),
+      });
+      try {
+        await Users.updateOne(
+          { _id: new ObjectID(req.userId) },
+          { $push: { createdPosts: new ObjectID(post.insertedId) } },
+        );
+        return {
+          _id: post.insertedId,
+          ...post.ops[0],
+          date: new Date(post.ops[0].date).toISOString(),
+          creator: await populateUser(Users, Posts, post.ops[0].creator),
+        };
+      } catch (err) {
+        return err;
+      }
+    } catch (err) {
+      return err;
+    }
+  },
   posts: async (data, { collections: { Posts, Users } }) => {
     try {
       const posts = await Posts.find({}).toArray();
@@ -35,27 +66,6 @@ export default {
         date: new Date(post.date).toISOString(),
         creator: await populateUser(Users, Posts, post.creator),
       }));
-    } catch (err) {
-      return err;
-    }
-  },
-  createPost: async (data, { collections: { Posts, Users } }, req) => {
-    if (!req.isAuth) {
-      throw new Error('Unauthenticated');
-    }
-    try {
-      const post = await Posts.insertOne({
-        title: data.postInput.title,
-        description: data.postInput.description,
-        text: data.postInput.text,
-        date: data.postInput.date,
-        creator: new ObjectID(req.userId),
-      });
-      await Users.updateOne(
-        { _id: new ObjectID(req.userId) },
-        { $push: { createdPosts: new ObjectID(post.insertedId) } },
-      ).catch((err) => err);
-      return { _id: post.insertedId, ...post.ops[0] };
     } catch (err) {
       return err;
     }

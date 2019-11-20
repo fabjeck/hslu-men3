@@ -12,15 +12,15 @@ export default buildSchema(`
 
     type User {
       _id: ID! 
-      username: String!
-      password: String
+      firstName: String!
+      lastName: String!
+      email: String!
       createdPosts: [Post!]
     } 
 
-    type AuthData {
-      userId: ID!
+    type AuthPayload {
+      user: User!
       token: String!
-      tokenExpiration: Int!
     }
 
     input PostInput {
@@ -31,18 +31,20 @@ export default buildSchema(`
     }
 
     input UserInput {
-      username: String!
+      firstName: String!
+      lastName: String!
+      email: String!
       password: String!
     }
 
     type Query {
       posts: [Post!]!
-      login(username: String!, password: String!): AuthData!
+      login(email: String!, password: String!): AuthPayload!
     }
 
     type Mutation {
       createPost(postInput: PostInput): Post
-      createUser(userInput: UserInput): User
+      createUser(userInput: UserInput): AuthPayload!
     }
 
     schema {

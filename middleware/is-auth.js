@@ -6,7 +6,7 @@ export default (req, res, next) => {
     req.isAuth = false;
     return next();
   }
-  const token = authHeader.split(' ')[1];
+  const token = authHeader.replace('Bearer ', '');
   if (!token || token === '') {
     req.isAuth = false;
     return next();

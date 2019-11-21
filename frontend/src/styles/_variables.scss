@@ -1,16 +1,14 @@
 /** Colors **/
-$color-background: #FFFFFF;
-$color-primary: #222222;
+$color-primary: #0066ff;
 $color-secondary: #888888;
-$color-highlight: #0066ff;
-$color-light: #EFEFEF;
+$color-background: #FFFFFF;
+$color-default: #222222;
 $color-error: #FFC6C6;
 
 /** Font **/
 $font-size-base: 1rem;
 $font-size-small: 0.85rem;
-$font-size-medium: 1.1rem;
-$font-size-large: 1.4rem;
+$font-size-large: 1.15rem;
 
 $font-weight-regular: 400;
 $font-weight-medium: 600;
@@ -19,5 +17,4 @@ $font-weight-bold: 800;
 /** Layout **/
 $space-base: 8px;
 $space-small: $space-base / 2;
-$space-medium: $space-base * 2;
 $space-large: $space-base * 3;

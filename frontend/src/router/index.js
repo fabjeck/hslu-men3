@@ -9,14 +9,34 @@ const routes = [
     path: '/',
     name: 'Blog',
     component: Blog,
+    meta: {
+      authOptions: true,
+    },
+    beforeRouteUpdate(to, from, next) {
+      this.loggedIn();
+      next();
+    },
+    children: [
+      {
+        path: 'createPost',
+        name: 'CreatePost',
+        component: () => import('../views/CreatePost.vue'),
+        meta: {
+          authOptions: true,
+        },
+        // beforeEnter: (to, from, next) => {
+
+        // },
+      },
+    ],
   },
   {
     path: '/login',
     name: 'Login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue'),
+    component: () => import('../views/Login.vue'),
+    meta: {
+      authOptions: false,
+    },
   },
   {
     path: '/signup',
@@ -24,7 +44,10 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/SignUp.vue'),
+    component: () => import('../views/SignUp.vue'),
+    meta: {
+      authOptions: false,
+    },
   },
 ];
 

@@ -17,10 +17,14 @@ export default {
 
 <style scoped lang="scss">
 .article-wrapper {
-  cursor: pointer;
+  padding: $space-large;
+  border-bottom: 1px solid $color-secondary;
+  h2 {
+    color: $color-primary;
+  }
   .description {
     color: $color-secondary;
-    margin: 0 0 $space-medium 0;
+    margin: 0 0 $space-base 0;
     max-width: 60%;
   }
   .author {
@@ -31,11 +35,6 @@ export default {
     font-size: $font-size-small;
     color: $color-secondary;
     margin: 0;
-  }
-  &:hover {
-    h2 {
-      color: $color-highlight;
-    }
   }
 }
 </style>

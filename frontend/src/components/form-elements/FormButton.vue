@@ -8,10 +8,7 @@
 export default {
   name: 'FormButton',
   props: {
-    label: {
-      type: String,
-      required: true,
-    },
+    label: String,
   },
 };
 </script>

@@ -5,7 +5,6 @@ export default buildSchema(`
       _id: ID!
       title: String!
       description: String!
-      text: String!
       date: String!
       creator: User!
     }
@@ -26,7 +25,6 @@ export default buildSchema(`
     input PostInput {
       title: String!
       description: String!
-      text: String!
       date: String!
     }
 

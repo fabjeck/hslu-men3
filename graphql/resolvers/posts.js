@@ -36,7 +36,6 @@ export default {
       const post = await Posts.insertOne({
         title: input.title,
         description: input.description,
-        text: input.text,
         date: input.date,
         creator: new ObjectID(req.userId),
       });

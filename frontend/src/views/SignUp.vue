@@ -1,6 +1,7 @@
 <template>
   <div class="signup">
-    <section class="auth-modal">
+    <section class="auth-wrapper">
+      <h1>Sign up</h1>
      <form @submit.prevent="submitHandler">
         <FormInput
           v-model.trim="firstName.value"
@@ -14,21 +15,21 @@
           :label="lastName.label"
           type="text"
           id="lastName"/>
-          <FormInput
+        <FormInput
           v-model.trim="email.value"
           :error="email.error"
           :label="email.label"
           type="text"
           id="email"/>
-          <FormInput
+        <FormInput
           v-model.trim="password.value"
           :error="password.error"
           :label="password.label"
           type="password"
           id="password"/>
-        <FormButton label="Sign Up"/>
-        <FormLink name="login">
-          <template v-slot:login>
+        <FormButton label="Create account"/>
+        <FormLink>
+          <template>
             Already registered? <router-link to="/login">Login</router-link> to write a blog post.
           </template>
         </FormLink>
@@ -41,6 +42,8 @@
 import FormInput from '@/components/form-elements/FormInput.vue';
 import FormButton from '@/components/form-elements/FormButton.vue';
 import FormLink from '@/components/form-elements/FormLink.vue';
+
+import Store from '@/scripts/Store';
 
 export default {
   name: 'SignUp',
@@ -81,7 +84,7 @@ export default {
             mutation {
               createUser(userInput: {firstName: "${this.firstName.value}", lastName: "${this.lastName.value}", email: "${this.email.value}", password: "${this.password.value}"}) {
                 user {
-                  email
+                  _id
                 }
                 token
               }
@@ -98,12 +101,18 @@ export default {
               'Content-Type': 'application/json',
             },
           });
-          const data = await res.json();
+          // Request response
+          const resData = await res.json();
           if (!res.ok) {
-            this.email.error = data.errors[0].message;
+            this.email.error = resData.errors[0].message;
             return false;
           }
-          return console.log(data);
+          // Save userId and token in store
+          Store.id = resData.data.createUser.user._id;
+          Store.token = resData.data.createUser.token;
+          // Redirect to "home"
+          this.$router.push('/');
+          return true;
         } catch (err) {
           return err;
         }

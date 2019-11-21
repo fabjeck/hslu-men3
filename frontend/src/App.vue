@@ -5,10 +5,15 @@
         <div class="logo">
           <router-link to="/">The Blog</router-link>
         </div>
-        <div v-if="showAccount" class="account">
-          <router-link to="/login">Login</router-link>
-          <span> | </span>
-          <router-link to="/signup">Sign up</router-link>
+        <div v-if="$route.meta.authOptions" class="auth-options">
+          <template v-if="loggedIn">
+            <router-link to="/" @click.native="logout">Logout</router-link>
+          </template>
+          <template v-else>
+            <router-link to="/login">Login</router-link>
+            <span> | </span>
+            <router-link to="/signup">Sign up</router-link>
+          </template>
         </div>
       </nav>
     </header>
@@ -16,17 +21,27 @@
       <router-view/>
     </main>
     <footer>
-      <p class="author"><b>Fabien Jeckelmann</b> | BSc in Digital Ideation | Hochschule Luzern</p>
+      <p class="author">
+        <strong>Fabien Jeckelmann</strong>
+         | BSc in Digital Ideation | Hochschule Luzern
+      </p>
     </footer>
   </div>
 </template>
 
 
 <script>
+import Store from '@/scripts/Store';
+
 export default {
+  methods: {
+    logout() {
+      Store.clear();
+    },
+  },
   computed: {
-    showAccount() {
-      return this.$route.path !== '/login' && this.$route.path !== '/signup';
+    loggedIn() {
+      return Store.id;
     },
   },
 };
@@ -43,18 +58,16 @@ export default {
 
   #nav {
     display: flex;
-    justify-content: space-between;
     align-items: flex-end;
-    padding: $space-medium $space-large;
     .logo {
       flex: 1 1 auto;
       a {
         font-weight: $font-weight-bold;
-        font-size: 1.8rem;
+        font-size: 1.3rem;
         text-transform: uppercase;
       }
     }
-    .account {
+    .auth-options {
       flex: 0 0 auto;
       a {
         &:hover {

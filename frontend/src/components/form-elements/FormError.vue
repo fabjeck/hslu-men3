@@ -15,11 +15,11 @@ export default {
 
 <style scoped lang="scss">
   .form-error {
-    background-color: $color-error;
-    border: 1px solid darken($color-error, 20%);
-    color: darken($color-error, 20%);
     margin-top: 5px;
     position: relative;
+    background-color: $color-error;
+    color: darken($color-error, 20%);
+    border: 1px solid darken($color-error, 20%);
     &::before, &::after {
       content: "";
       display: block;

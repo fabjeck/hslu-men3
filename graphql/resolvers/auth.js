@@ -30,7 +30,7 @@ export default {
         };
         // Create JWT-token
         const token = jwt.sign(
-          { userId: callback._id, email: callback.email },
+          { userId: user._id },
           secretKey.KEY,
           { algorithm: secretKey.ALGORITHM },
         );
@@ -60,7 +60,7 @@ export default {
       }
       // Create JWT-token
       const token = jwt.sign(
-        { userId: user._id, email: user.email },
+        { userId: user._id },
         secretKey.KEY,
         { algorithm: secretKey.ALGORITHM },
       );

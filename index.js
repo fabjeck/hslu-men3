@@ -55,12 +55,12 @@ const connectMongo = async () => {
     // Create GraphQL HTTP server
     app.use(
       '/graphql',
-      graphqlHTTP({
+      graphqlHTTP((req) => ({
         schema: graphQLSchema,
         rootValue: graphQLResolvers,
-        context: { collections },
+        context: { collections, req },
         graphiql: true,
-      }),
+      })),
     );
 
     // Define Express (GraphQL server) port

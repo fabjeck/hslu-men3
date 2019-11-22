@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Blog from '../views/Blog.vue';
 
+import Store from '../scripts/Store';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -12,10 +14,6 @@ const routes = [
     meta: {
       authOptions: true,
     },
-    beforeRouteUpdate(to, from, next) {
-      this.loggedIn();
-      next();
-    },
     children: [
       {
         path: 'createPost',
@@ -23,10 +21,9 @@ const routes = [
         component: () => import('../views/CreatePost.vue'),
         meta: {
           authOptions: true,
+          showModal: true,
+          authOnly: true,
         },
-        // beforeEnter: (to, from, next) => {
-
-        // },
       },
     ],
   },
@@ -54,5 +51,7 @@ const routes = [
 const router = new VueRouter({
   routes,
 });
+
+router.beforeEach((to, from, next) => ((to.meta.authOnly && !Store.token) ? next('/login') : next()));
 
 export default router;

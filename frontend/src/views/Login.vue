@@ -80,8 +80,14 @@ export default {
         // Request response
         const resData = await res.json();
         if (!res.ok) {
-          this.email.error = resData.errors[0].message;
-          this.password.error = resData.errors[0].message;
+          // Horrible implementation, but time saving...
+          if (resData.errors[0].message === 'User does not exist.') {
+            this.email.error = resData.errors[0].message;
+            this.password.error = null;
+          } else {
+            this.email.error = null;
+            this.password.error = resData.errors[0].message;
+          }
           return false;
         }
         // Save userId and token in store

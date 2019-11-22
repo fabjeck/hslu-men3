@@ -23,6 +23,8 @@ import FormInput from '@/components/form-elements/FormInput.vue';
 import FormTextarea from '@/components/form-elements/FormTextarea.vue';
 import FormButton from '@/components/form-elements/FormButton.vue';
 
+import Store from '@/scripts/Store';
+
 export default {
   name: 'CreatePost',
   components: {
@@ -51,10 +53,8 @@ export default {
           query: `
             mutation {
               createPost(postInput: {title: "${this.title.value}", description: "${this.description.value}", date: "${new Date().toISOString()}"}) {
-                user {
-                  _id
-                }
-                token
+                _id
+                title
               }
             }
           `,
@@ -62,22 +62,21 @@ export default {
 
         // Execute request
         try {
+          /* eslint quote-props: ["error", "as-needed",
+          { "keywords": true, "unnecessary": false }] */
           const res = await fetch('http://localhost:3000/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `Bearer ${Store.token}`,
             },
           });
           // Request response
           const resData = await res.json();
-          if (!res.ok) {
-            this.email.error = resData.errors[0].message;
-            return false;
+          if (resData.errors) {
+            throw new Error('Failed');
           }
-          // Save userId and token in localStorage
-          localStorage.setItem('_id', resData.data.createUser.user._id);
-          localStorage.setItem('token', resData.data.createUser.token);
           // Redirect to "home"
           this.$router.push('/');
           return true;
@@ -105,8 +104,8 @@ export default {
 
       // Check if any errors occured
       if (
-        !this.firstName.error
-        && !this.lastName.error
+        !this.title.error
+        && !this.description.error
       ) {
         return true;
       }

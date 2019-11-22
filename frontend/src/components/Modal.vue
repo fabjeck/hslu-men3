@@ -1,7 +1,7 @@
 <template>
   <div class="modal-mask">
     <section class="modal">
-      <div class="close" @click="$emit('close')"></div>
+      <div class="close" @click="$router.go(-1)"></div>
       <slot></slot>
     </section>
   </div>

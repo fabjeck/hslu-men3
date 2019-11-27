@@ -26,7 +26,7 @@ Create nodemon.json to save your credentials for MongoDB
    }
  }
 ```
-## Technology
+## Tech Stack
 [`VueJS`](https://vuejs.org/) - SPA Framework
 
 [`bcrypt`](https://github.com/dcodeIO/bcrypt.js/) - Authentication
@@ -39,7 +39,7 @@ Create nodemon.json to save your credentials for MongoDB
 
 [`mongoDB`](https://www.mongodb.com/) - Database
 
-[`Atlas`](https://www.mongodb.com/cloud/atlas) - Database hosting
+[`Atlas`](https://www.mongodb.com/cloud/atlas) - Database Hosting
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

@@ -20,7 +20,7 @@ const routes = [
         name: 'CreatePost',
         component: () => import('../views/CreatePost.vue'),
         meta: {
-          authOptions: true,
+          authOptions: true, // Show login / sign in buttons
           showModal: true,
           authOnly: true,
         },
@@ -38,9 +38,6 @@ const routes = [
   {
     path: '/signup',
     name: 'SignUp',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import('../views/SignUp.vue'),
     meta: {
       authOptions: false,
@@ -52,6 +49,7 @@ const router = new VueRouter({
   routes,
 });
 
+// Handle visit of unauthorized routes
 router.beforeEach((to, from, next) => ((to.meta.authOnly && !Store.token) ? next('/login') : next()));
 
 export default router;

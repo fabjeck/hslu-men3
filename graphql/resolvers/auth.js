@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import ValidationError from '../errors/ValidationError';
 
 import secretKey from '../../middleware/secret-key';
 
@@ -9,7 +10,7 @@ export default {
       // Check for existing users with same email
       const userExists = await Users.findOne({ email: userInput.email });
       if (userExists) {
-        throw new Error('User exists already.');
+        throw new ValidationError('User exists already.', 'email');
       }
       // Hash password with 12-digit salt
       const hashedPassword = await bcrypt.hash(userInput.password, 12);
@@ -51,12 +52,13 @@ export default {
       // Find user account in MongoDV
       const user = await Users.findOne({ email });
       if (!user) {
-        throw new Error('User does not exist.');
+        // throw new Error('User does not exist.');
+        throw new ValidationError('User does not exist.', 'email');
       }
       // Compare typed password with saved password
       const isEqual = await bcrypt.compare(password, user.password);
       if (!isEqual) {
-        throw new Error('Wrong password.');
+        throw new ValidationError('Wrong password.', 'password');
       }
       // Create JWT-token
       const token = jwt.sign(

@@ -59,6 +59,12 @@ const connectMongo = async () => {
         schema: graphQLSchema,
         rootValue: graphQLResolvers,
         context: { collections, req },
+        customFormatErrorFn: (error) => ({
+          message: error.message,
+          key: error.originalError && error.originalError.key,
+          locations: error.locations,
+          path: error.path,
+        }),
         graphiql: true,
       })),
     );

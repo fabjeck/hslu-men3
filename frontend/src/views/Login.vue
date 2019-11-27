@@ -80,11 +80,10 @@ export default {
         // Request response
         const resData = await res.json();
         if (!res.ok) {
-          // Horrible implementation, but time saving...
-          if (resData.errors[0].message === 'User does not exist.') {
+          if (resData.errors[0].key === 'email') {
             this.email.error = resData.errors[0].message;
             this.password.error = null;
-          } else {
+          } else if (resData.errors[0].key === 'password') {
             this.email.error = null;
             this.password.error = resData.errors[0].message;
           }

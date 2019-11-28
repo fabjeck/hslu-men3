@@ -23,8 +23,6 @@ import FormInput from '@/components/form-elements/FormInput.vue';
 import FormTextarea from '@/components/form-elements/FormTextarea.vue';
 import FormButton from '@/components/form-elements/FormButton.vue';
 
-import Store from '@/scripts/Store';
-
 export default {
   name: 'CreatePost',
   components: {
@@ -69,7 +67,7 @@ export default {
             body: JSON.stringify(requestBody),
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${Store.token}`,
+              'Authorization': `Bearer ${this.$root.globalState.token}`,
             },
           });
           // Request response

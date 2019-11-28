@@ -11,10 +11,10 @@
       />
     </section>
     <Modal v-if="$route.meta.showModal">
-      <router-view/>
+      <router-view />
     </Modal>
     <router-link
-      v-if="loggedIn"
+      v-if="this.$root.globalState.token"
       tag="button"
       class="addBtn"
       to="/CreatePost">
@@ -26,8 +26,6 @@
 import ArticlePreview from '@/components/ArticlePreview.vue';
 import Modal from '@/components/Modal.vue';
 
-import Store from '@/scripts/Store';
-
 export default {
   name: 'Blog',
   components: {
@@ -37,15 +35,14 @@ export default {
   data: () => ({
     posts: [],
   }),
-  computed: {
-    loggedIn() {
-      return Store.id;
-    },
+  created() {
+    this.fetchPosts();
   },
-  async mounted() {
-    // Define request body
-    const requestBody = {
-      query: `
+  methods: {
+    async fetchPosts() {
+      // Define request body
+      const requestBody = {
+        query: `
         query {
           posts {
             _id
@@ -59,48 +56,48 @@ export default {
           }
         }
       `,
-    };
+      };
 
-    // Execute request
-    try {
-      /* eslint quote-props: ["error", "as-needed",
+      // Execute request
+      try {
+        /* eslint quote-props: ["error", "as-needed",
       { "keywords": true, "unnecessary": false }] */
-      const res = await fetch('http://localhost:3000/graphql', {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      // Request response
-      const resData = await res.json();
-      if (resData.errors) {
-        throw new Error('Failed');
+        const res = await fetch('http://localhost:3000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        // Request response
+        const resData = await res.json();
+        if (resData.errors) {
+          throw new Error('Failed');
+        }
+        this.posts = resData.data.posts;
+        return true;
+      } catch (err) {
+        return err;
       }
-      this.posts = resData.data.posts;
-      return true;
-    } catch (err) {
-      return err;
-    }
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
-
-  .addBtn {
-    width: 80px;
-    height: 80px;
-    border-radius: 100%;
-    position: absolute;
-    bottom: 0;
-    right: $space-large;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &::after {
-      content: '\002b';
-      font-size: 3rem;
-    }
+.addBtn {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  position: absolute;
+  bottom: 0;
+  right: $space-large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &::after {
+    content: "\002b";
+    font-size: 3rem;
   }
+}
 </style>

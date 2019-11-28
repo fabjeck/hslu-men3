@@ -5,8 +5,8 @@
         <div class="logo">
           <router-link to="/">The Blog</router-link>
         </div>
-        <div v-if="$route.meta.authOptions" class="auth-options">
-          <template v-if="loggedIn">
+        <div v-if="$route.meta.authOptions !== false" class="auth-options">
+          <template v-if="this.$root.globalState.token">
             <router-link to="/" @click.native="logout">Logout</router-link>
           </template>
           <template v-else>
@@ -31,17 +31,12 @@
 
 
 <script>
-import Store from '@/scripts/Store';
+import store from '@/scripts/store';
 
 export default {
   methods: {
     logout() {
-      Store.clear();
-    },
-  },
-  computed: {
-    loggedIn() {
-      return Store.id;
+      store.clear();
     },
   },
 };

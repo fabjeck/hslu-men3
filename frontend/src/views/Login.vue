@@ -31,7 +31,7 @@ import FormInput from '@/components/form-elements/FormInput.vue';
 import FormButton from '@/components/form-elements/FormButton.vue';
 import FormLink from '@/components/form-elements/FormLink.vue';
 
-import Store from '@/scripts/Store';
+import store from '@/scripts/store';
 
 export default {
   name: 'Login',
@@ -89,9 +89,8 @@ export default {
           }
           return false;
         }
-        // Save userId and token in store
-        Store.id = resData.data.login.user._id;
-        Store.token = resData.data.login.token;
+        // Save token in store
+        store.setToken(resData.data.login.token);
         // Redirect to "home"
         this.$router.push('/');
         return true;

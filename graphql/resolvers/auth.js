@@ -1,8 +1,13 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import ValidationError from '../errors/ValidationError';
-
 import secretKey from '../../middleware/secret-key';
+
+const generateToken = (uid) => jwt.sign(
+  { userId: uid },
+  secretKey.KEY,
+  { algorithm: secretKey.ALGORITHM },
+);
 
 export default {
   createUser: async ({ userInput }, { collections: { Users } }) => {
@@ -30,11 +35,7 @@ export default {
           email: callback.ops[0].email,
         };
         // Create JWT-token
-        const token = jwt.sign(
-          { userId: user._id },
-          secretKey.KEY,
-          { algorithm: secretKey.ALGORITHM },
-        );
+        const token = generateToken(user._id);
         // Return props which correspond to GrapQL schema
         return {
           user,
@@ -60,14 +61,10 @@ export default {
       if (!isEqual) {
         throw new ValidationError('Wrong password.', 'password');
       }
-      // Create JWT-token
-      const token = jwt.sign(
-        { userId: user._id },
-        secretKey.KEY,
-        { algorithm: secretKey.ALGORITHM },
-      );
       // Remove password from user object, to meet GrapQL schema definitions
       delete user.password;
+      // Create JWT-token
+      const token = generateToken(user._id);
       // Return props which correspond to GrapQL schema
       return {
         user,

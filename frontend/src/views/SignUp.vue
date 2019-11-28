@@ -43,7 +43,7 @@ import FormInput from '@/components/form-elements/FormInput.vue';
 import FormButton from '@/components/form-elements/FormButton.vue';
 import FormLink from '@/components/form-elements/FormLink.vue';
 
-import Store from '@/scripts/Store';
+import store from '@/scripts/store';
 
 export default {
   name: 'SignUp',
@@ -107,9 +107,8 @@ export default {
             this.email.error = resData.errors[0].message;
             return false;
           }
-          // Save userId and token in store
-          Store.id = resData.data.createUser.user._id;
-          Store.token = resData.data.createUser.token;
+          // Save token in store
+          store.setToken(resData.data.createUser.token);
           // Redirect to "home"
           this.$router.push('/');
           return true;

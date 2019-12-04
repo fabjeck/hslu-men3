@@ -11,7 +11,7 @@
       />
     </section>
     <Modal v-if="$route.meta.showModal">
-      <router-view />
+      <router-view @add-post="prependPost"/>
     </Modal>
     <router-link
       v-if="this.$root.globalState.token"
@@ -77,6 +77,9 @@ export default {
       } catch (err) {
         return err;
       }
+    },
+    prependPost(post) {
+      this.posts.unshift(post);
     },
   },
 };

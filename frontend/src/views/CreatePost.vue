@@ -80,8 +80,8 @@ export default {
           if (resData.errors) {
             throw new Error('Failed');
           }
-          console.log(resData.data.createPost);
-          console.log(this.$parent);
+          // Emit post
+          this.$emit('add-post', resData.data.createPost);
           // Redirect to "home"
           this.$router.push('/');
           return true;

@@ -68,7 +68,7 @@ export default {
   posts: async (data, { collections: { Posts, Users } }) => {
     try {
       // Get all posts from MongoDB
-      const posts = await Posts.find({}).toArray();
+      const posts = await Posts.find({}).sort({ date: -1 }).toArray();
       // Return posts
       return await Promise.all(
         posts.map(async (post) => ({

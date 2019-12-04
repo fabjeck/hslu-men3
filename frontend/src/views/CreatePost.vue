@@ -53,11 +53,16 @@ export default {
               createPost(postInput: {title: "${this.title.value}", description: "${this.description.value}", date: "${new Date().toISOString()}"}) {
                 _id
                 title
+                description
+                date
+                creator {
+                  firstName
+                  lastName
+                }
               }
             }
           `,
         };
-
         // Execute request
         try {
           /* eslint quote-props: ["error", "as-needed",
@@ -75,6 +80,8 @@ export default {
           if (resData.errors) {
             throw new Error('Failed');
           }
+          console.log(resData.data.createPost);
+          console.log(this.$parent);
           // Redirect to "home"
           this.$router.push('/');
           return true;

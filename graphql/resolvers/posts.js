@@ -5,12 +5,14 @@ const populatePosts = async (Posts, Users, postIds) => {
     // Find all posts from one user
     const posts = await Posts.find({ _id: { $in: postIds } }).toArray();
     // Return posts
-    return posts.map(async (post) => ({
-      ...post,
-      date: new Date(post.date).toISOString(),
-      // eslint-disable-next-line no-use-before-define
-      creator: await populateUser(Users, Posts, post.creator),
-    }));
+    return await Promise.all(
+      posts.map(async (post) => ({
+        ...post,
+        date: new Date(post.date).toISOString(),
+        // eslint-disable-next-line no-use-before-define
+        creator: await populateUser.bind(this, Users, Posts, post.creator),
+      })),
+    );
   } catch (err) {
     return err;
   }
@@ -23,7 +25,7 @@ const populateUser = async (Users, Posts, userId) => {
     // Return user
     return {
       ...user,
-      createdPosts: await populatePosts(Posts, Users, user.createdPosts),
+      createdPosts: await populatePosts.bind(this, Posts, Users, user.createdPosts),
     };
   } catch (err) {
     return err;
@@ -68,11 +70,13 @@ export default {
       // Get all posts from MongoDB
       const posts = await Posts.find({}).toArray();
       // Return posts
-      return posts.map(async (post) => ({
-        ...post,
-        date: new Date(post.date).toISOString(),
-        creator: await populateUser(Users, Posts, post.creator),
-      }));
+      return await Promise.all(
+        posts.map(async (post) => ({
+          ...post,
+          date: new Date(post.date).toISOString(),
+          creator: await populateUser(Users, Posts, post.creator),
+        })),
+      );
     } catch (err) {
       return err;
     }

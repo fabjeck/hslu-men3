@@ -60,8 +60,6 @@ export default {
 
       // Execute request
       try {
-        /* eslint quote-props: ["error", "as-needed",
-      { "keywords": true, "unnecessary": false }] */
         const res = await fetch('http://localhost:3000/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),

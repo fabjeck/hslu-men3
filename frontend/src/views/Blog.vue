@@ -90,9 +90,9 @@ export default {
   width: 80px;
   height: 80px;
   border-radius: 100%;
-  position: absolute;
-  bottom: 0;
-  right: $space-large;
+  position: fixed;
+  bottom: 100px;
+  right: calc(((100vw - 960px)/ 2) + #{$space-large});
   display: flex;
   justify-content: center;
   align-items: center;

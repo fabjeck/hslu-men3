@@ -36,7 +36,7 @@ export default {
 <style scoped lang="scss">
 .article-wrapper {
   padding: $space-large;
-  border-bottom: 1px solid $color-secondary;
+  margin: $space-large 0;
   h2 {
     color: $color-primary;
   }

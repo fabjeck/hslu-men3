@@ -55,7 +55,7 @@ Create nodemon.json to save your credentials for MongoDB
 
 [`Atlas`](https://www.mongodb.com/cloud/atlas) - Database Hosting
 
-## Documentation ##
+## Documentation ##
 
 ### Context ###
 
@@ -80,19 +80,24 @@ Since I was taking my first steps with technologies like GraphQl and MongoDB I w
 
 ### Result ###
 
-The final product is a blog (what a creative idea...), where only signed in users can publish content, but can be read by everyone.
+The final product is a blog, where only signed in users can publish content.
 
-![Blog sign up](assets/app-singup.png "Blog sign up")
-The blog's sign up view.
+#### The blog's sign up view. ####
+
+![Blog sign up](assets/app-signup.png "Blog sign up")
+
+
+#### The blog's posts view. ####
 
 ![Blog posts](assets/app-posts.png "Blog posts")
-The blog's posts view.
+
+#### The GraphiQL interface. ####
 
 ![GraphiQL](assets/graphiql.png "GraphiQL")
-The GraphiQL interface.
+
+#### The MongoDB database. ####
 
 ![MongoDB](assets/mongoDB.png "MongoDB")
-The MongoDB database.
 
 ### Learnings ###
 

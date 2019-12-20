@@ -38,7 +38,6 @@ Create nodemon.json to save your credentials for MongoDB
 
 ![Tech stack](assets/tech-stack.png "Tech stack")
 
-
 ### Links ###
 
 [`VueJS`](https://vuejs.org/) - SPA Framework
@@ -77,25 +76,23 @@ Since I was taking my first steps with technologies like GraphQl and MongoDB I w
 
 [`Youtube`](https://www.youtube.com/playlist?list=PL55RiY5tL51rG1x02Yyj93iypUuHYXcB_) - Tutorial series building a complete project with Node, MongoDB and React.
 
-
 ### Result ###
 
 The final product is a blog, where only signed in users can publish content.
 
-#### The blog's sign up view. ####
+#### The blog's sign up view ####
 
 ![Blog sign up](assets/app-signup.png "Blog sign up")
 
-
-#### The blog's posts view. ####
+#### The blog's posts view ####
 
 ![Blog posts](assets/app-posts.png "Blog posts")
 
-#### The GraphiQL interface. ####
+#### The GraphiQL interface ####
 
 ![GraphiQL](assets/graphiql.png "GraphiQL")
 
-#### The MongoDB database. ####
+#### The MongoDB database ####
 
 ![MongoDB](assets/mongoDB.png "MongoDB")
 

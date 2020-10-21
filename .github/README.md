@@ -1,6 +1,8 @@
-# vue-graphql-mongodb-blog #
+# Minimal Blog with Vue, GraphQL, MongoDB #
 
-First steps with vanilla GraphQL, MongoDB and JWT...
+HSLU Digital Ideation - HS2019
+
+**Mentoring (3. Semester)**
 
 ## Usage ##
 
